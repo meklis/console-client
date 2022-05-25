@@ -12,6 +12,6 @@ class ZTE extends DefaultHelper
     ];
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = false;
+    protected $enableMagicControl = true;
     protected $windowSize = null;
 }

@@ -17,7 +17,7 @@ class SSH extends AbstractConsole
 
     public function connect($host, $port = 22, HelperInterface $helper = null)
     {
-        if($helper) {
+        if ($helper) {
             $helper->setConnectionType("ssh");
             $this->helper = $helper;
         }
@@ -35,7 +35,7 @@ class SSH extends AbstractConsole
             }
         }
         $originalConnectionTimeout = ini_get('default_socket_timeout');
-        ini_set('default_socket_timeout', 3);
+        ini_set('default_socket_timeout', 5);
         $ssh = ssh2_connect($this->host, $this->port);
         if (!$ssh) {
             throw new \Exception("Error connect");
@@ -57,7 +57,7 @@ class SSH extends AbstractConsole
 
     function login($username, $password)
     {
-        if($sizes = $this->helper->getWindowSize()) {
+        if ($sizes = $this->helper->getWindowSize()) {
             $wide = $sizes[0];
             $high = $sizes[1];
             $sizeType = SSH2_TERM_UNIT_CHARS;
@@ -66,18 +66,24 @@ class SSH extends AbstractConsole
             $high = null;
             $sizeType = null;
         }
-        if(!ssh2_auth_password($this->connection,$username,$password)) {
+
+        if (!ssh2_auth_password($this->connection, $username, $password)) {
             throw new \Exception("Error auth");
         }
         $this->session = ssh2_shell($this->connection, null, null, $wide, $high, $sizeType);
-
+        try {
+            if ($wide && $high) {
+                $this->setWindowSize($wide, $high);
+            }
+        } catch (\Exception $e) {
+        }
         try {
             $this->waitPrompt();
-            if($this->helper->isDoubleLoginPrompt()) {
+            if ($this->helper->isDoubleLoginPrompt()) {
                 $this->waitPrompt();
             }
         } catch (\Exception $e) {
-            throw new \Exception("Login failed.");
+            throw new \Exception("Login failed. ({$e->getMessage()})");
         }
         return $this->runAfterLoginCommands();
     }
@@ -186,7 +192,7 @@ class SSH extends AbstractConsole
                 if (empty($prompt)) {
                     return $this;
                 }
-                throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
+            //    throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
             }
 
             // Interpreted As Command
@@ -259,8 +265,9 @@ class SSH extends AbstractConsole
         return $this;
     }
 
-    function enableCatchErrors() {
-        set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    function enableCatchErrors()
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
         });
     }
