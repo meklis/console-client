@@ -21,6 +21,6 @@ class Helpers
         if (!isset(self::$helpers[$name])) {
             throw new \Exception("Helper with name $name not found");
         }
-        return self::$helpers[$name];
+        return new self::$helpers[$name]();
     }
 }
