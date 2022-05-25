@@ -11,8 +11,5 @@ class Ios extends DefaultHelper
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
-    protected $windowSize = [
-        255,
-        120
-    ];
+    protected $windowSize = null;
 }

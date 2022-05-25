@@ -13,10 +13,7 @@ class DefaultHelper implements HelperInterface
     protected $enableMagicControl = false;
     protected $eol = "\n";
     protected $connectionType;
-    protected $windowSize = [
-        1024,
-        500
-    ];
+    protected $windowSize = null;
 
     /**
      * @return string
