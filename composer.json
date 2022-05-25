@@ -1,0 +1,24 @@
+{
+    "name": "meklis/console-client",
+    "description": "SSH/Telnet client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Max Boyar",
+            "email": "max.boyar.a@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Meklis\\Network\\Console\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.2.0",
+        "ext-ssh2": "*",
+        "ext-mbstring": "*",
+        "ext-sockets": "*"
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,23 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "4575d77612b8a5340bd9e8e87fcd3649",
+    "packages": [],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.2.0",
+        "ext-ssh2": "*",
+        "ext-mbstring": "*",
+        "ext-sockets": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}
