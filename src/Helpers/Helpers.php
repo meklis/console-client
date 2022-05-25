@@ -14,6 +14,7 @@ class Helpers
         'junos' => Junos::class,
         'linux' => Linux::class,
         'xos' => Xos::class,
+        'zte' => ZTE::class,
     ];
 
     /**
