@@ -16,6 +16,11 @@ class Helpers
         'xos' => Xos::class,
     ];
 
+    /**
+     * @param $name
+     * @return HelperInterface
+     * @throws \Exception
+     */
     public static function getByName($name)
     {
         if (!isset(self::$helpers[$name])) {

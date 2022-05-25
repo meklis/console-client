@@ -111,4 +111,32 @@ class DefaultHelper implements HelperInterface
         return $this;
     }
 
+    /**
+     * @param array $afterLoginCommands
+     * @return DefaultHelper
+     */
+    public function setAfterLoginCommands(array $afterLoginCommands): DefaultHelper
+    {
+        $this->afterLoginCommands = $afterLoginCommands;
+        return $this;
+    }
+
+    /**
+     * @param array $afterLoginCommands
+     * @return DefaultHelper
+     */
+    public function AddAfterLoginCommand($command, $no_wait = false, $usleep_after = 0): DefaultHelper
+    {
+        $this->afterLoginCommands[] = [
+            'command' => $command,
+            'no_wait' => $no_wait,
+            'usleep' => $usleep_after,
+        ];
+        return $this;
+    }
+
+
+
+
+
 }
