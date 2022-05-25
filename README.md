@@ -1,6 +1,10 @@
 # Console-Client
 PHP library for login/password connections to devices over Telnet and SSH.
 
+## Install
+```shell
+composer require meklis/console-client
+```
 
 ## Example 
 **SSH connection to ZTE devices**

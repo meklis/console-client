@@ -19,6 +19,5 @@
         "ext-ssh2": "*",
         "ext-mbstring": "*",
         "ext-sockets": "*"
-    },
-    "minimum-stability": "dev"
+    }
 }
