@@ -125,7 +125,7 @@ class DefaultHelper implements HelperInterface
      * @param array $afterLoginCommands
      * @return DefaultHelper
      */
-    public function AddAfterLoginCommand($command, $no_wait = false, $usleep_after = 0): DefaultHelper
+    public function addAfterLoginCommand($command, $no_wait = false, $usleep_after = 0): DefaultHelper
     {
         $this->afterLoginCommands[] = [
             'command' => $command,

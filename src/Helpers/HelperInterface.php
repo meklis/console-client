@@ -60,7 +60,22 @@ interface HelperInterface
 
     /**
      * @param mixed $connectionType
-     * @return DefaultHelper
+     * @return self
      */
     public function setConnectionType($connectionType);
+
+
+    /**
+     * @param array $afterLoginCommands
+     * @return self
+     */
+    public function setAfterLoginCommands(array $afterLoginCommands);
+
+    /**
+     * @param $command
+     * @param $no_wait
+     * @param $usleep_after
+     * @return self
+     */
+    public function addAfterLoginCommand($command, $no_wait = false, $usleep_after = 0);
 }
