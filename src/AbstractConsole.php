@@ -300,6 +300,8 @@ abstract class AbstractConsole
             if(is_array($command)) {
                 if(isset($command['no_wait']) && $command['no_wait']) {
                     $this->write($command['command']);
+                } else {
+                    $this->exec($command['command']);
                 }
                 if(isset($command['usleep']) && $command['usleep']) {
                     usleep($command['usleep']);
