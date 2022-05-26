@@ -9,11 +9,9 @@ class Bdcom extends DefaultHelper
     protected $passwordPrompt = 'assword:';
     protected $afterLoginCommands = [
         'enable',
-        'config',
         'terminal length 0',
     ];
     protected $beforeLogoutCommands = [
-        ['command' => 'exit', 'no_wait' => true],
         ['command' => 'exit', 'no_wait' => true],
         ['command' => 'exit', 'no_wait' => true],
     ];
