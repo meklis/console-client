@@ -12,7 +12,11 @@ class Bdcom extends DefaultHelper
         'config',
         'terminal length 0',
     ];
-    protected $beforeLogoutCommands = [];
+    protected $beforeLogoutCommands = [
+        ['command' => 'exit', 'no_wait' => true],
+        ['command' => 'exit', 'no_wait' => true],
+        ['command' => 'exit', 'no_wait' => true],
+    ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
     protected $windowSize = null;
