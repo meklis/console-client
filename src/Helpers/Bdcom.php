@@ -4,10 +4,14 @@ namespace Meklis\Network\Console\Helpers;
 
 class Bdcom extends DefaultHelper
 {
-    protected $prompt = ' [>#] ';
-    protected $userPrompt = 'login:';
-    protected $passwordPrompt = 'password:';
-    protected $afterLoginCommands = [];
+    protected $prompt = '[>#]';
+    protected $userPrompt = 'name:';
+    protected $passwordPrompt = 'assword:';
+    protected $afterLoginCommands = [
+        'enable',
+        'config',
+        'terminal length 0',
+    ];
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
