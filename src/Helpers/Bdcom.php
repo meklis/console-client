@@ -17,5 +17,8 @@ class Bdcom extends DefaultHelper
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
-    protected $windowSize = null;
+    protected $windowSize = [
+        1024,
+        512
+    ];
 }
