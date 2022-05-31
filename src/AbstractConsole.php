@@ -183,9 +183,23 @@ abstract class AbstractConsole
             if(isset($lines[0]) && strpos($lines[0], $command) !== false) {
                 unset($lines[0]);
             }
-            return  implode("\n", $lines);
+            return  $this->removeNotASCIISymbols(implode("\n", $lines));
         }
-        return  $buffer;
+        return $this->removeNotASCIISymbols($buffer);
+    }
+
+    protected function removeNotASCIISymbols($chars)
+    {
+        if (!mb_detect_encoding($chars, 'ASCII', true)) {
+            $chars = str_split($chars);
+            foreach ($chars as $num => $char) {
+                if (!mb_detect_encoding($char, 'ASCII', true)) {
+                    unset($chars[$num]);
+                }
+            }
+            return implode('',$chars);
+        }
+        return $chars;
     }
 
     /**
