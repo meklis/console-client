@@ -180,7 +180,7 @@ abstract class AbstractConsole
         $this->waitPrompt($prompt);
         $buffer =  $this->getBuffer();
         if($lines = explode("\n", $buffer)) {
-            if(isset($lines[0]) && strpos($lines[0], $command) !== false) {
+            if(isset($lines[0]) && trim($command) && strpos($lines[0], $command) !== false) {
                 unset($lines[0]);
             }
             return  $this->removeNotASCIISymbols(implode("\n", $lines));
