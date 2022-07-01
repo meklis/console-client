@@ -78,4 +78,8 @@ interface HelperInterface
      * @return self
      */
     public function addAfterLoginCommand($command, $no_wait = false, $usleep_after = 0);
+
+
+    public function getPaginationDetect();
+    public function setPaginationDetect(string $paginationDetect);
 }

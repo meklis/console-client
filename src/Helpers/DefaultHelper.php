@@ -14,6 +14,7 @@ class DefaultHelper implements HelperInterface
     protected $eol = "\n";
     protected $connectionType;
     protected $windowSize = null;
+    protected $paginationDetect = '';
 
     /**
      * @return string
@@ -132,8 +133,22 @@ class DefaultHelper implements HelperInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getPaginationDetect(): string
+    {
+        return $this->paginationDetect;
+    }
 
-
-
+    /**
+     * @param string $paginationDetect
+     * @return DefaultHelper
+     */
+    public function setPaginationDetect(string $paginationDetect): DefaultHelper
+    {
+        $this->paginationDetect = $paginationDetect;
+        return $this;
+    }
 
 }

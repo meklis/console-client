@@ -205,6 +205,10 @@ class SSH extends AbstractConsole
             // append current char to global buffer
             $this->buffer .= $c;
 
+            if (!$this->helper->getPaginationDetect() && preg_match("/{$this->helper->getPaginationDetect()}/", $this->buffer)) {
+                $this->write("");
+                $this->buffer = str_replace($this->helper->getPaginationDetect(), "", $this->buffer);
+            }
             // we've encountered the prompt. Break out of the loop
             if (!empty($prompt) && preg_match("/{$prompt}$/", $this->buffer)) {
                 return $this;

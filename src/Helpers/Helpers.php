@@ -15,6 +15,7 @@ class Helpers
         'linux' => Linux::class,
         'xos' => Xos::class,
         'zte' => ZTE::class,
+        'zte_с220' => ZteC220::class,
         'huawei' => Huawei::class,
     ];
 
