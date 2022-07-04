@@ -11,7 +11,7 @@ class ZteC220 extends DefaultHelper
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = true;
-    protected $paginationDetect = '--More--';
+    protected $paginationDetect = '/--More--/';
     protected $windowSize = [
         1024,
         512

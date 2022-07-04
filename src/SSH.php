@@ -206,12 +206,11 @@ class SSH extends AbstractConsole
             $this->buffer .= $c;
 
             if ($this->helper->getPaginationDetect()) {
-                if(strpos($this->buffer, $this->helper->getPaginationDetect()) !== false) {
+                if(preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
                     if (!fwrite($this->session, "\n") < 0) {
                         throw new \Exception("Error writing to session");
                     }
-                    $this->buffer = str_replace($this->helper->getPaginationDetect(), "", $this->buffer);
-                    $this->buffer .= "\n";
+                    $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", $this->buffer);
                     continue;
                 }
             }

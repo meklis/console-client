@@ -186,12 +186,11 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             // append current char to global buffer
             $this->buffer .= $c;
             if ($this->helper->getPaginationDetect()) {
-                if(strpos($this->buffer, $this->helper->getPaginationDetect()) !== false) {
+                if(preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
+                    $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", trim($this->buffer));
                     if (!fwrite($this->socket, "\n") < 0) {
                         throw new \Exception("Error writing to socket");
                     }
-                    $this->buffer = str_replace($this->helper->getPaginationDetect(), "", $this->buffer);
-                    $this->buffer .= "\n";
                     continue;
                 }
             }
