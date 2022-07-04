@@ -10,6 +10,7 @@ class Cdata extends DefaultHelper
     protected $afterLoginCommands = [];
     protected $beforeLogoutCommands = [];
     protected $windowSize = null;
+    protected $paginationDetect = '--More';
 
     public function isDoubleLoginPrompt(): bool
     {

@@ -185,10 +185,15 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
             // append current char to global buffer
             $this->buffer .= $c;
-
-            if ($this->helper->getPaginationDetect() && strpos($this->helper->getPaginationDetect(), $this->buffer) !== false) {
-                $this->write("");
-                $this->buffer = str_replace($this->helper->getPaginationDetect(), "", $this->buffer);
+            if ($this->helper->getPaginationDetect()) {
+                if(strpos($this->buffer, $this->helper->getPaginationDetect()) !== false) {
+                    if (!fwrite($this->socket, "\n") < 0) {
+                        throw new \Exception("Error writing to socket");
+                    }
+                    $this->buffer = str_replace($this->helper->getPaginationDetect(), "", $this->buffer);
+                    $this->buffer .= "\n";
+                    continue;
+                }
             }
 
             // we've encountered the prompt. Break out of the loop
