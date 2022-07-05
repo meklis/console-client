@@ -17,6 +17,7 @@ class Helpers
         'zte' => ZTE::class,
         'zte_с220' => ZteC220::class,
         'huawei' => Huawei::class,
+        'stels' => Stels::class,
     ];
 
     /**
