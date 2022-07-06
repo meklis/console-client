@@ -8,7 +8,12 @@ class ZteC220 extends DefaultHelper
     protected $userPrompt = 'Username:';
     protected $passwordPrompt = 'Password:';
     protected $afterLoginCommands = [];
-    protected $beforeLogoutCommands = [];
+    protected $beforeLogoutCommands = [
+        'exit',
+        'yes',
+        'logo',
+        'yes'
+    ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = true;
     protected $paginationDetect = '/--More--/';
