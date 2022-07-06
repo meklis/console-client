@@ -9,10 +9,10 @@ class ZteC220 extends DefaultHelper
     protected $passwordPrompt = 'Password:';
     protected $afterLoginCommands = [];
     protected $beforeLogoutCommands = [
-        'exit',
-        'yes',
-        'logo',
-        'yes'
+       ['command'=>'exit','no_wait'=>true,'usleep'=>1000],
+       ['command'=>'yes','no_wait'=>true,'usleep'=>1000],
+       ['command'=>'logo','no_wait'=>true,'usleep'=>1000],
+       ['command'=>'yes','no_wait'=>true,'usleep'=>1000],
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = true;
