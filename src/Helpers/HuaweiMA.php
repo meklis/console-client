@@ -4,7 +4,7 @@ namespace Meklis\Network\Console\Helpers;
 
 class HuaweiMA extends DefaultHelper
 {
-    protected $prompt = '[>#]';
+    protected $prompt = '^[^{}].*?[>#]';
     protected $userPrompt = 'ame:';
     protected $passwordPrompt = 'ord:';
     protected $afterLoginCommands = [
@@ -19,7 +19,7 @@ class HuaweiMA extends DefaultHelper
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
     protected $windowSize = [
-        1024,
+        512,
         500
     ];
 }

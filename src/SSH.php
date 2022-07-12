@@ -216,7 +216,7 @@ class SSH extends AbstractConsole
             }
 
             // we've encountered the prompt. Break out of the loop
-            if (!empty($prompt) && preg_match("/{$prompt}$/", $this->buffer)) {
+            if (!empty($prompt) && preg_match("/{$prompt}$/m", $this->buffer)) {
                 return $this;
             }
 
