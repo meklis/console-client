@@ -143,6 +143,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
     {
         stream_set_timeout($this->socket, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fgetc($this->socket);
+       // echo $c;
         $this->global_buffer->fwrite($c);
         return $c;
     }
@@ -196,7 +197,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             }
 
             // we've encountered the prompt. Break out of the loop
-            if (!empty($prompt) && preg_match("/{$prompt}$/m", $this->buffer)) {
+            if (!empty($prompt) && preg_match("/{$prompt}/m", $this->buffer)) {
                 return $this;
             }
 
