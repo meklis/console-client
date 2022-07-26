@@ -221,7 +221,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         if ($add_newline == true) {
             $buffer .= $this->eol;
         }
-        $this->global_buffer->fwrite($buffer);
+        if($this->global_buffer->isWritable()) {
+            $this->global_buffer->fwrite($buffer);
+        }
         if (!fwrite($this->socket, $buffer) < 0) {
             throw new \Exception("Error writing to socket");
         }
