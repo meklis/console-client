@@ -243,7 +243,6 @@ class SSH extends AbstractConsole
         if ($add_newline == true) {
             $buffer .= $this->eol;
         }
-
         if($this->global_buffer->isWritable()) {
             $this->global_buffer->fwrite($buffer);
         }

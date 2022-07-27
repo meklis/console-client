@@ -15,7 +15,7 @@ class ZTE extends DefaultHelper
         ['command'=>'yes','no_wait'=>true,'usleep'=>1000],
     ];
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = true;
+    protected $enableMagicControl = false;
     protected $windowSize = [
         1024,
         512
