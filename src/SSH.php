@@ -71,12 +71,7 @@ class SSH extends AbstractConsole
             throw new \Exception("Error auth");
         }
         $this->session = ssh2_shell($this->connection, null, null, $wide, $high, $sizeType);
-        try {
-            if ($wide && $high) {
-                $this->setWindowSize($wide, $high);
-            }
-        } catch (\Exception $e) {
-        }
+
         try {
             $this->waitPrompt();
             if ($this->helper->isDoubleLoginPrompt()) {
@@ -161,6 +156,9 @@ class SSH extends AbstractConsole
     {
         stream_set_timeout($this->session, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fread($this->session, 1);
+        if(!$c) {
+            usleep(10000);
+        }
         $this->global_buffer->fwrite($c);
         return $c;
     }

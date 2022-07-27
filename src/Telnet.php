@@ -144,6 +144,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         stream_set_timeout($this->socket, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fgetc($this->socket);
        // echo $c;
+        if(!$c) {
+            usleep(10000);
+        }
         $this->global_buffer->fwrite($c);
         return $c;
     }
