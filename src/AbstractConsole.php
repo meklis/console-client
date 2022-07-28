@@ -267,7 +267,7 @@ abstract class AbstractConsole
      *
      * @return string Content of the command buffer
      */
-    protected function getBuffer()
+    function getBuffer()
     {
         // Remove all carriage returns from line breaks
         $buf = str_replace(["\n\r", "\r\n", "\n", "\r"], "\n", $this->buffer);

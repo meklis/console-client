@@ -19,7 +19,7 @@ class HuaweiMA extends DefaultHelper
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
     protected $windowSize = [
-        512,
-        500
+        1024,
+        1024
     ];
 }
