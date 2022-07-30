@@ -143,7 +143,6 @@ class Telnet extends AbstractConsole implements ConsoleInterface
     {
         stream_set_timeout($this->socket, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fgetc($this->socket);
-       // echo $c;
         if(!$c) {
             usleep(10000);
         }
@@ -224,9 +223,11 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         if ($add_newline == true) {
             $buffer .= $this->eol;
         }
-        if($this->global_buffer->isWritable()) {
+
+        try {
             $this->global_buffer->fwrite($buffer);
-        }
+        } catch (\Throwable $e) {}
+
         if (!fwrite($this->socket, $buffer) < 0) {
             throw new \Exception("Error writing to socket");
         }

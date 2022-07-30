@@ -241,9 +241,11 @@ class SSH extends AbstractConsole
         if ($add_newline == true) {
             $buffer .= $this->eol;
         }
-        if($this->global_buffer->isWritable()) {
+
+        try {
             $this->global_buffer->fwrite($buffer);
-        }
+        } catch (\Throwable $e) {}
+
 
         if (!fwrite($this->session, $buffer) < 0) {
             throw new \Exception("Error writing to session");
