@@ -157,7 +157,7 @@ class SSH extends AbstractConsole
         stream_set_timeout($this->session, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fread($this->session, 1);
         if(!$c) {
-            usleep(10000);
+            usleep(100);
         }
         $this->global_buffer->fwrite($c);
         return $c;
