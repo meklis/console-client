@@ -8,6 +8,7 @@ class Vsolution extends DefaultHelper
     protected $userPrompt = 'Login:';
     protected $passwordPrompt = 'Password:';
     protected $afterLoginCommands = [
+        'terminal length 0'
     ];
     protected $beforeLogoutCommands = [
     ];
