@@ -19,6 +19,7 @@ class Helpers
         'huawei' => Huawei::class,
         'huawei_ma' => HuaweiMA::class,
         'stels' => Stels::class,
+        'vsolution' => Vsolution::class,
     ];
 
     /**
