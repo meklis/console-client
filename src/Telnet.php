@@ -146,7 +146,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         if(!$c) {
             usleep(100);
         }
-        $this->global_buffer->fwrite($c);
+        try {
+            $this->global_buffer->fwrite($c);
+        } catch (\Throwable $e) {}
         return $c;
     }
 

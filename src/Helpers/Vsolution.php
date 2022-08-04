@@ -11,6 +11,7 @@ class Vsolution extends DefaultHelper
         'terminal length 0'
     ];
     protected $beforeLogoutCommands = [
+        ['command'=>'exit','no_wait'=>true,'usleep'=>10],
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
