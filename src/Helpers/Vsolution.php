@@ -14,8 +14,5 @@ class Vsolution extends DefaultHelper
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
-    protected $windowSize = [
-        1024,
-        512
-    ];
+    protected $windowSize = null;
 }
