@@ -14,8 +14,8 @@ class Dlink extends DefaultHelper
     protected $eol = "\r\n";
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
-    protected $windowSize = [
-        1024,
-        500
-    ];
+//    protected $windowSize = [
+//        1024,
+//        500
+//    ];
 }
