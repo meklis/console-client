@@ -22,7 +22,6 @@ abstract class AbstractConsole
     protected $prompt;
     protected $errno;
     protected $errstr;
-    protected $strip_prompt = true;
     protected $eol = "\n";
     protected $enableMagicControl = true;
     protected $NULL;
@@ -123,28 +122,6 @@ abstract class AbstractConsole
     }
 
     /**
-     * Disable strip prompt
-     *
-     * @return $this
-     */
-    public function disableStripPrompt()
-    {
-        $this->strip_prompt = false;
-        return $this;
-    }
-
-    /**
-     * Enable strip prompt
-     *
-     * @return $this
-     */
-    public function enableStripPrompt()
-    {
-        $this->strip_prompt = true;
-        return $this;
-    }
-
-    /**
      * Setted EOL symbol for new line in linux style (\n)
      *
      * @return $this
@@ -240,16 +217,6 @@ abstract class AbstractConsole
         $this->stream_timeout_sec = (int)$timeout;
     }
 
-    /**
-     * Set if the buffer should be stripped from the buffer after reading.
-     *
-     * @param $strip boolean if the prompt should be stripped.
-     * @return void
-     */
-    public function stripPromptFromBuffer($strip)
-    {
-        $this->strip_prompt = $strip;
-    }
 
     /**
      * Clears internal command buffer
@@ -272,7 +239,7 @@ abstract class AbstractConsole
         // Remove all carriage returns from line breaks
         $buf = str_replace(["\n\r", "\r\n", "\n", "\r"], "\n", $this->buffer);
         // Cut last line from buffer (almost always prompt)
-        if ($this->strip_prompt) {
+        if ($this->helper->isStripPrompt()) {
             $buf = explode("\n", $buf);
             unset($buf[count($buf) - 1]);
             $buf = implode("\n", $buf);
