@@ -7,6 +7,7 @@ class DefaultHelper implements HelperInterface
     protected $prompt = '[%>#$]';
     protected $userPrompt = 'ame:';
     protected $passwordPrompt = 'ord:';
+    protected $stripPrompt = true;
     protected $afterLoginCommands = [];
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
@@ -22,6 +23,24 @@ class DefaultHelper implements HelperInterface
     public function getPrompt()
     {
         return $this->prompt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStripPrompt(): bool
+    {
+        return $this->stripPrompt;
+    }
+
+    /**
+     * @param bool $stripPrompt
+     * @return DefaultHelper
+     */
+    public function setStripPrompt(bool $stripPrompt): DefaultHelper
+    {
+        $this->stripPrompt = $stripPrompt;
+        return $this;
     }
 
     /**
@@ -151,4 +170,7 @@ class DefaultHelper implements HelperInterface
         return $this;
     }
 
+    public function setEol($eol) {
+        $this->eol = "\r\n";
+    }
 }
