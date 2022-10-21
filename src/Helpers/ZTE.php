@@ -17,7 +17,7 @@ class ZTE extends DefaultHelper
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
-    protected $stripPrompt = false;
+    protected $stripPrompt = true;
     protected $windowSize = [
         1024,
         512
