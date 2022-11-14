@@ -10,7 +10,7 @@ class ZTE extends DefaultHelper
     protected $afterLoginCommands = [
         'terminal length 0'
     ];
-    protected $eol = "\r\n";
+    protected $eol = "\n";
     protected $beforeLogoutCommands = [
         ['command'=>'exit','no_wait'=>true,'usleep'=>1000],
         ['command'=>'yes','no_wait'=>true,'usleep'=>1000],
