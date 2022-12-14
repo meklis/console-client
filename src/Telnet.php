@@ -193,7 +193,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             if ($this->helper->getPaginationDetect()) {
                 if(preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
                     $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", trim($this->buffer));
-                    if (!fwrite($this->socket, "\n") < 0) {
+                    if (!fwrite($this->socket, $this->eol) < 0) {
                         throw new \Exception("Error writing to socket");
                     }
                     continue;

@@ -8,8 +8,9 @@ class Cdata extends DefaultHelper
     protected $userPrompt = 'name:';
     protected $passwordPrompt = 'password:';
     protected $afterLoginCommands = [];
+    protected $enableMagicControl = false;
+    protected $eol = "\r\n";
     protected $beforeLogoutCommands = [];
-    protected $windowSize = null;
     protected $paginationDetect = '/--More.*--/';
 
     public function isDoubleLoginPrompt(): bool
