@@ -95,7 +95,11 @@ abstract class AbstractConsole
     public function __destruct()
     {
         // clean up resources
-        $this->disconnect();
+        try {
+            $this->disconnect();
+        } catch (\Throwable $e) {
+
+        }
         $this->buffer = null;
     }
 
