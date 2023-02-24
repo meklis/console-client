@@ -12,8 +12,8 @@ class ZTE extends DefaultHelper
     ];
     protected $eol = "\n";
     protected $beforeLogoutCommands = [
-        ['command'=>'exit','no_wait'=>true,'usleep'=>1000],
-        ['command'=>'yes','no_wait'=>true,'usleep'=>1000],
+        ['command'=>'exit','no_wait'=>true,'usleep'=>2000],
+        ['command'=>'yes','no_wait'=>true,'usleep'=>2000],
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
