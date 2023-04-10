@@ -21,6 +21,8 @@ class Helpers
         'stels' => Stels::class,
         'vsolution' => Vsolution::class,
         'foxgate' => Foxgate::class,
+        'tplink' => TpLink::class,
+        'tplinkold' => TpLinkOld::class,
     ];
 
     /**
