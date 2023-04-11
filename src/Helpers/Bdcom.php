@@ -16,9 +16,10 @@ class Bdcom extends DefaultHelper
         ['command' => 'exit', 'no_wait' => true],
     ];
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = false;
+    protected $enableMagicControl = true;
     protected $windowSize = [
-        1024,
+        768,
         512
     ];
+    protected $ignoreEOF = true;
 }

@@ -17,6 +17,8 @@ class DefaultHelper implements HelperInterface
     protected $windowSize = null;
     protected $paginationDetect = '';
 
+    protected $ignoreEOF = false;
+
     /**
      * @return string
      */
@@ -173,4 +175,25 @@ class DefaultHelper implements HelperInterface
     public function setEol($eol) {
         $this->eol = "\r\n";
     }
+
+    /**
+     * @return bool
+     */
+    public function isIgnoreEOF(): bool
+    {
+        return $this->ignoreEOF;
+    }
+
+    /**
+     * @param bool $ignoreEOF
+     * @return DefaultHelper
+     */
+    public function setIgnoreEOF(bool $ignoreEOF): DefaultHelper
+    {
+        $this->ignoreEOF = $ignoreEOF;
+        return $this;
+    }
+
+
+
 }

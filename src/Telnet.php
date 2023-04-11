@@ -141,11 +141,8 @@ class Telnet extends AbstractConsole implements ConsoleInterface
      */
     protected function getc()
     {
-        stream_set_timeout($this->socket, $this->stream_timeout_sec, $this->stream_timeout_usec);
+        stream_set_timeout($this->socket, $this->stream_timeout_sec);
         $c = fgetc($this->socket);
-        if(!$c) {
-            usleep(100);
-        }
         try {
             $this->global_buffer->fwrite($c);
         } catch (\Throwable $e) {}
@@ -165,8 +162,8 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
         // clear the buffer
         $this->clearBuffer();
-
         $until_t = time() + $this->timeout;
+        $eofDetected = 0;
         do {
             // time's up (loop can be exited at end or through continue!)
             if (time() > $until_t) {
@@ -178,7 +175,20 @@ class Telnet extends AbstractConsole implements ConsoleInterface
                 if (empty($prompt)) {
                     return $this;
                 }
-                throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
+                $info = stream_get_meta_data($this->socket);
+                if($info['timed_out']) {
+                    throw new \Exception("Stream timeout {$this->stream_timeout_sec}sec is reached :-(");
+                }
+                if($this->helper->isIgnoreEOF()) {
+                    usleep(1000);
+                    $eofDetected++;
+                    if($eofDetected > 50000) {
+                        throw new \Exception("Host {$this->host} send EOF within send all data");
+                    }
+                    continue;
+                } else {
+                    throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
+                }
             }
 
             // Interpreted As Command
