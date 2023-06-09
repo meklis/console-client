@@ -36,7 +36,17 @@ class SSH extends AbstractConsole
         }
         $originalConnectionTimeout = ini_get('default_socket_timeout');
         ini_set('default_socket_timeout', 5);
-        $ssh = ssh2_connect($this->host, $this->port);
+        $methods = [
+            'hostkey' => 'ssh-rsa,ssh-dss',
+            'kex' => 'diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256',
+            'client_to_server' => [
+                'crypt' => 'aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc,arcfour,arcfour128,none',
+                'comp' => 'none'],
+            'server_to_client' => [
+                'crypt' => 'aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc,arcfour,arcfour128,none',
+                'comp' => 'none']];
+
+        $ssh = ssh2_connect($this->host, $this->port, $methods);
         if (!$ssh) {
             throw new \Exception("Error connect");
         }
@@ -156,7 +166,7 @@ class SSH extends AbstractConsole
     {
         stream_set_timeout($this->session, $this->stream_timeout_sec, $this->stream_timeout_usec);
         $c = fread($this->session, 1);
-        if(!$c) {
+        if (!$c) {
             usleep(100);
         }
         $this->global_buffer->fwrite($c);
@@ -190,7 +200,7 @@ class SSH extends AbstractConsole
                 if (empty($prompt)) {
                     return $this;
                 }
-            //    throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
+                //    throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
             }
 
             // Interpreted As Command
@@ -204,7 +214,7 @@ class SSH extends AbstractConsole
             $this->buffer .= $c;
 
             if ($this->helper->getPaginationDetect()) {
-                if(preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
+                if (preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
                     if (!fwrite($this->session, "\n") < 0) {
                         throw new \Exception("Error writing to session");
                     }
@@ -244,7 +254,8 @@ class SSH extends AbstractConsole
 
         try {
             $this->global_buffer->fwrite($buffer);
-        } catch (\Throwable $e) {}
+        } catch (\Throwable $e) {
+        }
 
 
         if (!fwrite($this->session, $buffer) < 0) {
