@@ -5,7 +5,7 @@ namespace Meklis\Network\Console\Helpers;
 class Dlink extends DefaultHelper
 {
     protected $prompt = '[>#]';
-    protected $userPrompt = '(ame|login):';
+    protected $userPrompt = '.*(ame|login):';
     protected $passwordPrompt = 'ord:';
     protected $afterLoginCommands = [
         'disable cli'

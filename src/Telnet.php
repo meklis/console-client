@@ -110,17 +110,16 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         try {
             // username
             if (!empty($username)) {
-                $this->setPrompt($this->helper->getUserPrompt());
+                $this->setRegexPrompt($this->helper->getUserPrompt());
                 $this->waitPrompt();
                 $this->write(trim($username));
             }
 
             // password
-            $this->setPrompt($this->helper->getPasswordPrompt());
+            $this->setRegexPrompt($this->helper->getPasswordPrompt());
             $this->waitPrompt();
             $this->write(trim($password));
 
-            // wait prompt
             $this->setRegexPrompt($this->helper->getPrompt());
             $this->waitPrompt();
             if ($this->helper->isDoubleLoginPrompt()) {
@@ -209,6 +208,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
                     continue;
                 }
             }
+            echo $c;
 
             // we've encountered the prompt. Break out of the loop
             if (!empty($prompt) && preg_match("/{$prompt}/m", $this->buffer)) {
