@@ -208,7 +208,6 @@ class Telnet extends AbstractConsole implements ConsoleInterface
                     continue;
                 }
             }
-            echo $c;
 
             // we've encountered the prompt. Break out of the loop
             if (!empty($prompt) && preg_match("/{$prompt}/m", $this->buffer)) {
