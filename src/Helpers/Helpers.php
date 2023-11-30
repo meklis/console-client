@@ -23,6 +23,7 @@ class Helpers
         'foxgate' => Foxgate::class,
         'tplink' => TpLink::class,
         'tplinkold' => TpLinkOld::class,
+        'edge-core' => Edgecore::class,
     ];
 
     /**
