@@ -202,7 +202,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
             // append current char to global buffer
             $this->buffer .= $c;
-            $latestBytes =  substr($this->buffer, -70);
+            $latestBytes =  $this->removeNotASCIISymbols(substr($this->buffer, -70));
             if ($this->helper->getPaginationDetect()) {
                 if(preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", trim($this->buffer));
