@@ -9,7 +9,7 @@ class Cdata extends DefaultHelper
     protected $passwordPrompt = 'password:';
     protected $afterLoginCommands = [];
     protected $enableMagicControl = false;
-    protected $eol = "\r\n";
+    protected $eol = "\n";
     protected $beforeLogoutCommands = [];
     protected $paginationDetect = '/--More.*--/';
 
