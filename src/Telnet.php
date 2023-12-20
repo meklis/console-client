@@ -170,15 +170,12 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             }
 
             $c = $this->getc();
-            echo $c;
             if ($c === false) {
                 if (empty($prompt)) {
                     return $this;
                 }
                 $info = stream_get_meta_data($this->socket);
                 if($info['timed_out']) {
-                    echo "LATEST BYTES..\n";
-                    echo "%".substr($this->buffer, -70)."%\n";
                     throw new \Exception("Stream timeout {$this->stream_timeout_sec}sec is reached :-(");
                 }
                 if($this->helper->isIgnoreEOF()) {

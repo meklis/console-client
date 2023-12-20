@@ -213,7 +213,7 @@ class SSH extends AbstractConsole
             // append current char to global buffer
             $this->buffer .= $c;
 
-             $latestBytes =  substr($this->buffer, -70);
+             $latestBytes =  $this->removeNotASCIISymbols(substr($this->buffer, -70));
             if ($this->helper->getPaginationDetect()) {
                 if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     if (!fwrite($this->session, "\n") < 0) {
