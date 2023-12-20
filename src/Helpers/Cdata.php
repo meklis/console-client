@@ -4,12 +4,12 @@ namespace Meklis\Network\Console\Helpers;
 
 class Cdata extends DefaultHelper
 {
-    protected $prompt = '([A-z0-9]{1,3}.*).*[>#]$';
+    protected $prompt = '^(.*?More.*)?([A-z_0-9]{1,3}.*).*[>#]$';
     protected $userPrompt = 'name:';
     protected $passwordPrompt = 'password:';
     protected $afterLoginCommands = [];
     protected $enableMagicControl = false;
-    protected $eol = "\n";
+    protected $eol = "\r\n";
     protected $beforeLogoutCommands = [];
     protected $paginationDetect = '/--More.*--/';
 

@@ -213,8 +213,9 @@ class SSH extends AbstractConsole
             // append current char to global buffer
             $this->buffer .= $c;
 
+             $latestBytes =  substr($this->buffer, -70);
             if ($this->helper->getPaginationDetect()) {
-                if (preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
+                if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     if (!fwrite($this->session, "\n") < 0) {
                         throw new \Exception("Error writing to session");
                     }
@@ -224,7 +225,7 @@ class SSH extends AbstractConsole
             }
 
             // we've encountered the prompt. Break out of the loop
-            if (!empty($prompt) && preg_match("/{$prompt}$/m", $this->buffer)) {
+            if (!empty($prompt) && preg_match("/{$prompt}$/m", $latestBytes)) {
                 return $this;
             }
 

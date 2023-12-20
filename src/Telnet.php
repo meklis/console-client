@@ -170,6 +170,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             }
 
             $c = $this->getc();
+            echo $c;
             if ($c === false) {
                 if (empty($prompt)) {
                     return $this;
@@ -199,8 +200,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
             // append current char to global buffer
             $this->buffer .= $c;
+            $latestBytes =  substr($this->buffer, -70);
             if ($this->helper->getPaginationDetect()) {
-                if(preg_match($this->helper->getPaginationDetect(), $this->buffer)) {
+                if(preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", trim($this->buffer));
                     if (!fwrite($this->socket, $this->eol) < 0) {
                         throw new \Exception("Error writing to socket");
@@ -210,7 +212,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             }
 
             // we've encountered the prompt. Break out of the loop
-            if (!empty($prompt) && preg_match("/{$prompt}/m", $this->buffer)) {
+            if (!empty($prompt) && preg_match("/{$prompt}/m",  $latestBytes)) {
                 return $this;
             }
 
