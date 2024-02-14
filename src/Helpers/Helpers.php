@@ -24,6 +24,7 @@ class Helpers
         'tplink' => TpLink::class,
         'tplinkold' => TpLinkOld::class,
         'edge-core' => Edgecore::class,
+        'gcom' => Gcom::class,
     ];
 
     /**
