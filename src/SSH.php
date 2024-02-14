@@ -90,7 +90,7 @@ class SSH extends AbstractConsole
         } catch (\Exception $e) {
             throw new \Exception("Login failed. ({$e->getMessage()})");
         }
-        return $this->runAfterLoginCommands();
+        return $this->runAfterLoginCommands($password);
     }
 
     /**

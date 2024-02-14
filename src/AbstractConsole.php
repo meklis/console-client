@@ -274,20 +274,36 @@ abstract class AbstractConsole
         if ($prompt === null) {
             $prompt = $this->prompt;
         }
-        return $this->readTo($prompt);
+        $this->readTo($prompt);
+        return $this->buffer;
     }
 
-    function runAfterLoginCommands() {
+    function runAfterLoginCommands($password) {
         foreach ($this->helper->getAfterLoginCommands() as $command) {
             if(is_string($command)) {
                 $this->exec($command);
             }
             if(is_array($command)) {
-                if(isset($command['no_wait']) && $command['no_wait']) {
-                    $this->write($command['command']);
-                } else {
-                    $this->exec($command['command']);
+                $prompt = null;
+                if(isset($command['prompt']) && $command['prompt']) {
+                    $prompt = $command['prompt'];
                 }
+                if(isset($command['check_password'])) {
+                    $this->write($command['command']);
+                    $readed = $this->waitPrompt("({$this->helper->getPrompt()}|{$this->helper->getPasswordPrompt()})");
+
+                    if(strpos($readed, "word") !== false) {
+                        $this->exec($password, true, $prompt);
+                    }
+                    continue;
+                }
+
+                if(isset($command['no_wait']) && $command['no_wait']) {
+                    $this->write($command['command'], true);
+                } else {
+                    $this->exec($command['command'], true, $prompt);
+                }
+
                 if(isset($command['usleep']) && $command['usleep']) {
                     usleep($command['usleep']);
                 }

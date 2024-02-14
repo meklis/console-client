@@ -128,7 +128,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         } catch (\Exception $e) {
             throw new \Exception("Login failed. {$e->getMessage()}");
         }
-        $this->runAfterLoginCommands();
+        $this->runAfterLoginCommands($password);
 
         return $this;
     }
