@@ -13,7 +13,7 @@ class Dell extends DefaultHelper
     protected $beforeLogoutCommands = [];
     protected $eol = "\r\n";
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = true;
+    protected $enableMagicControl = false;
 
     protected $paginationDetect = '/More/';
     protected $windowSize = null;
