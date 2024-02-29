@@ -25,6 +25,8 @@ class Helpers
         'tplinkold' => TpLinkOld::class,
         'edge-core' => Edgecore::class,
         'gcom' => Gcom::class,
+        'alcatel' => Alcatel::class,
+        'dell' => Dell::class,
     ];
 
     /**
