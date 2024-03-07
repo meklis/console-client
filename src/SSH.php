@@ -85,7 +85,12 @@ class SSH extends AbstractConsole
         try {
             $this->waitPrompt();
             if ($this->helper->isDoubleLoginPrompt()) {
-                $this->waitPrompt();
+                try {
+                    $tm = $this->timeout;
+                    $this->timeout = 0.5;
+                    $this->waitPrompt();
+                    $this->timeout = $tm;
+                } catch (\Exception $e) {}
             }
         } catch (\Exception $e) {
             throw new \Exception("Login failed. ({$e->getMessage()})");
