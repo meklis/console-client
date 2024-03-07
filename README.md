@@ -1,13 +1,17 @@
 # Console-Client
+
 PHP library for login/password connections to devices over Telnet and SSH.
 
 ## Install
+
 ```shell
 composer require meklis/console-client
 ```
 
-## Example 
+## Example
+
 **SSH connection to ZTE devices**
+
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
@@ -18,7 +22,8 @@ $ssh->login("login", "password");
 echo $ssh->exec("show card");
 ```    
 
-**Telnet connection to Dlink device** 
+**Telnet connection to Dlink device**
+
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
@@ -30,18 +35,29 @@ echo $ssh->exec("show switch");
 ```
 
 ## Supported vendors
-* Alaxala 
-* Bdcom   
-* Cdata  
+
+* Alcatel
+* Alaxala
+* Bdcom
+* Cdata
 * Dlink
+* Dell
+* Edgecore
+* Foxgate
+* Gcom
+* Huawei
+* Tp-link
 * Ios
 * ZTE
 * Junos
 * Linux
-* Xos   
+* Vsolution
+* Xos
 
-For adding own vendors you can create Helper extended from DefaultHelper and implement HelperInterface.    
+For adding own vendors you can create Helper extended from DefaultHelper and implement HelperInterface.
+
 ### Example of helper
+
 ```php
 namespace Meklis\Network\Console\Helpers;
 
