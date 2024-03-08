@@ -16,7 +16,7 @@ class HuaweiMA extends DefaultHelper
         ['command'=>'y','no_wait'=>true],
     ];
     protected $eol = "\r\n";
-    protected $doubleLoginPrompt = true;
+    protected $doubleLoginPrompt = false;
     protected $enableMagicControl = false;
     protected $paginationDetect = '/---- More.*----/';
     protected $windowSize = [
