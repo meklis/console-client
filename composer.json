@@ -15,7 +15,7 @@
         }
     },
     "require": {
-        "php": ">=7.2.0",
+        "php": "7.*|8.*",
         "ext-ssh2": "*",
         "ext-mbstring": "*",
         "ext-sockets": "*"
