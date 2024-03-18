@@ -80,13 +80,13 @@ class SSH extends AbstractConsole
         if (!ssh2_auth_password($this->connection, $username, $password)) {
             throw new \Exception("Error auth");
         }
-        $this->session = ssh2_shell($this->connection, "vt100", null, $wide, $high, $sizeType);
+        $this->session = ssh2_shell($this->connection, null, null, $wide, $high, $sizeType);
 
         try {
             $this->waitPrompt( );
             if ($this->helper->isDoubleLoginPrompt()) {
                 try {
-                    $this->waitPrompt('', 0.5);
+                    $this->waitPrompt('', 0.2);
                 } catch (\Exception $e) {
                 }
             }
@@ -172,10 +172,14 @@ class SSH extends AbstractConsole
         } else {
             $ts = $this->stream_timeout_sec;
         }
+
+        $until_t = time() + $ts;
         stream_set_timeout($this->session, $ts);
-        $c = fread($this->session, 128);
-        if (!$c) {
+        TRY_READ:
+        $c = fread($this->session, 1024);
+        if (!$c && time() <= $until_t) {
             usleep(100);
+            goto TRY_READ;
         }
         $this->global_buffer->fwrite($c);
         return $c;
@@ -199,6 +203,11 @@ class SSH extends AbstractConsole
 
         $until_t = time() + $this->timeout;
 
+        if($this->helper->getWaitingResponseTimeout()) {
+            $timeout = $this->helper->getWaitingResponseTimeout();
+            $prompt = '';
+        }
+
         do {
             // time's up (loop can be exited at end or through continue!)
             if (time() > $until_t) {
@@ -207,10 +216,9 @@ class SSH extends AbstractConsole
 
             $c = $this->getc($timeout);
             if ($c === false) {
-                if (empty($prompt)) {
+                if (empty($prompt) && !$this->detectPagination()) {
                     return $this;
                 }
-                //    throw new \Exception("Couldn't find the requested : '" . $prompt . "', it was not in the data returned from server: " . $this->buffer);
             }
 
             // Interpreted As Command
@@ -224,16 +232,9 @@ class SSH extends AbstractConsole
             $this->buffer .= $c;
 
             $latestBytes = $this->removeNotASCIISymbols(substr($this->buffer, -70));
-            if ($this->helper->getPaginationDetect()) {
-                if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
-                    if (!fwrite($this->session, "\n") < 0) {
-                        throw new \Exception("Error writing to session");
-                    }
-                    $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", $this->buffer);
-                    continue;
-                }
+            if($this->detectPagination()) {
+                continue;
             }
-
             // we've encountered the prompt. Break out of the loop
             if (!empty($prompt) && preg_match("/{$prompt}/m", trim($latestBytes))) {
                 return $this;
@@ -241,6 +242,21 @@ class SSH extends AbstractConsole
 
         } while ($c != $this->NULL || $c != $this->DC1);
         return null;
+    }
+
+    function detectPagination()
+    {
+        $latestBytes = $this->removeNotASCIISymbols(substr($this->buffer, -70));
+        if ($this->helper->getPaginationDetect()) {
+            if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
+                if (!fwrite($this->session, "\n") < 0) {
+                    throw new \Exception("Error writing to session");
+                }
+                $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", $this->buffer);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -155,10 +155,10 @@ abstract class AbstractConsole
      * @param boolean $add_newline Default true, adds newline to the command
      * @return string Command result
      */
-    public function exec($command, $add_newline = true, $prompt = null, $timeoutStream = null)
+    public function exec($command, $add_newline = true, $prompt = null)
     {
         $this->write($command, $add_newline);
-        $this->waitPrompt($prompt, $timeoutStream);
+        $this->waitPrompt($prompt);
         $buffer =  $this->getBuffer();
         if($lines = explode("\n", $buffer)) {
             if(isset($lines[0]) && trim($command) && strpos($lines[0], $command) !== false) {

@@ -19,6 +19,20 @@ class DefaultHelper implements HelperInterface
 
     protected $ignoreEOF = false;
 
+    protected $waitingResponseTimeout = null;
+
+    public function getWaitingResponseTimeout()
+    {
+        return $this->waitingResponseTimeout;
+    }
+
+    public function setWaitingResponseTimeout($waitingResponseTimeout): DefaultHelper
+    {
+        $this->waitingResponseTimeout = $waitingResponseTimeout;
+        return $this;
+    }
+
+
     /**
      * @return string
      */
@@ -26,6 +40,8 @@ class DefaultHelper implements HelperInterface
     {
         return $this->prompt;
     }
+
+
 
     /**
      * @return bool
