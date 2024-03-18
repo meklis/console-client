@@ -124,11 +124,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             $this->waitPrompt();
             if ($this->helper->isDoubleLoginPrompt()) {
                 try {
-                    $tm = $this->timeout;
-                    $this->timeout = 0.5;
-                    $this->waitPrompt();
-                    $this->timeout = $tm;
-                } catch (\Exception $e) {}
+                    $this->waitPrompt('', 0.5);
+                } catch (\Exception $e) {
+                }
             }
         } catch (\Exception $e) {
             throw new \Exception("Login failed. {$e->getMessage()}");
@@ -143,13 +141,19 @@ class Telnet extends AbstractConsole implements ConsoleInterface
      *
      * @return string $c character string
      */
-    protected function getc()
+    protected function getc($timeoutSec = null)
     {
-        stream_set_timeout($this->socket, $this->stream_timeout_sec);
+        if(!$timeoutSec) {
+            $timeoutSec = $this->stream_timeout_sec;
+        }
+        echo "TIMEOUT={$timeoutSec}\n";
+        stream_set_timeout($this->socket, $timeoutSec);
         $c = fgetc($this->socket);
+        echo $c;
         try {
             $this->global_buffer->fwrite($c);
-        } catch (\Throwable $e) {}
+        } catch (\Throwable $e) {
+        }
         return $c;
     }
 
@@ -158,7 +162,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
      * Handles telnet control characters. Stops when prompt is ecountered.
      *
      */
-    protected function readTo($prompt)
+    protected function readTo($prompt, $timeoutSec = null)
     {
         if (!$this->socket) {
             throw new \Exception("Telnet connection closed");
@@ -174,19 +178,19 @@ class Telnet extends AbstractConsole implements ConsoleInterface
                 throw new \Exception("Couldn't find the requested : '$prompt' within {$this->timeout} seconds");
             }
 
-            $c = $this->getc();
+            $c = $this->getc($timeoutSec);
             if ($c === false) {
                 if (empty($prompt)) {
                     return $this;
                 }
                 $info = stream_get_meta_data($this->socket);
-                if($info['timed_out']) {
+                if ($info['timed_out']) {
                     throw new \Exception("Stream timeout {$this->stream_timeout_sec}sec is reached :-(");
                 }
-                if($this->helper->isIgnoreEOF()) {
+                if ($this->helper->isIgnoreEOF()) {
                     usleep(1000);
                     $eofDetected++;
-                    if($eofDetected > 50000) {
+                    if ($eofDetected > 50000) {
                         throw new \Exception("Host {$this->host} send EOF within send all data");
                     }
                     continue;
@@ -204,9 +208,9 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
             // append current char to global buffer
             $this->buffer .= $c;
-            $latestBytes =  $this->removeNotASCIISymbols(substr($this->buffer, -70));
+            $latestBytes = $this->removeNotASCIISymbols(substr($this->buffer, -70));
             if ($this->helper->getPaginationDetect()) {
-                if(preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
+                if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     $this->buffer = preg_replace($this->helper->getPaginationDetect(), "\n", trim($this->buffer));
                     if (!fwrite($this->socket, $this->eol) < 0) {
                         throw new \Exception("Error writing to socket");
@@ -216,7 +220,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             }
 
             // we've encountered the prompt. Break out of the loop
-            if (!empty($prompt) && preg_match("/{$prompt}/m",  trim($latestBytes))) {
+            if (!empty($prompt) && preg_match("/{$prompt}/m", trim($latestBytes))) {
                 return $this;
             }
 
@@ -243,7 +247,8 @@ class Telnet extends AbstractConsole implements ConsoleInterface
 
         try {
             $this->global_buffer->fwrite($buffer);
-        } catch (\Throwable $e) {}
+        } catch (\Throwable $e) {
+        }
 
         if (!fwrite($this->socket, $buffer) < 0) {
             throw new \Exception("Error writing to socket");

@@ -80,17 +80,15 @@ class SSH extends AbstractConsole
         if (!ssh2_auth_password($this->connection, $username, $password)) {
             throw new \Exception("Error auth");
         }
-        $this->session = ssh2_shell($this->connection, null, null, $wide, $high, $sizeType);
+        $this->session = ssh2_shell($this->connection, "vt100", null, $wide, $high, $sizeType);
 
         try {
-            $this->waitPrompt();
+            $this->waitPrompt( );
             if ($this->helper->isDoubleLoginPrompt()) {
                 try {
-                    $tm = $this->timeout;
-                    $this->timeout = 0.5;
-                    $this->waitPrompt();
-                    $this->timeout = $tm;
-                } catch (\Exception $e) {}
+                    $this->waitPrompt('', 0.5);
+                } catch (\Exception $e) {
+                }
             }
         } catch (\Exception $e) {
             throw new \Exception("Login failed. ({$e->getMessage()})");
@@ -167,10 +165,15 @@ class SSH extends AbstractConsole
      *
      * @return string $c character string
      */
-    protected function getc()
+    protected function getc($timeoutSec = null)
     {
-        stream_set_timeout($this->session, $this->stream_timeout_sec, $this->stream_timeout_usec);
-        $c = fread($this->session, 1);
+        if($timeoutSec) {
+            $ts = $timeoutSec;
+        } else {
+            $ts = $this->stream_timeout_sec;
+        }
+        stream_set_timeout($this->session, $ts);
+        $c = fread($this->session, 128);
         if (!$c) {
             usleep(100);
         }
@@ -181,10 +184,11 @@ class SSH extends AbstractConsole
 
     /**
      * @param $prompt
+     * @param $timout
      * @return $this|null
      * @throws \Exception
      */
-    protected function readTo($prompt)
+    protected function readTo($prompt, $timeout = null)
     {
         if (!$this->session) {
             throw new \Exception("SSH connection closed");
@@ -194,13 +198,14 @@ class SSH extends AbstractConsole
         $this->clearBuffer();
 
         $until_t = time() + $this->timeout;
+
         do {
             // time's up (loop can be exited at end or through continue!)
             if (time() > $until_t) {
                 throw new \Exception("Couldn't find the requested : '$prompt' within {$this->timeout} seconds");
             }
 
-            $c = $this->getc();
+            $c = $this->getc($timeout);
             if ($c === false) {
                 if (empty($prompt)) {
                     return $this;
@@ -218,7 +223,7 @@ class SSH extends AbstractConsole
             // append current char to global buffer
             $this->buffer .= $c;
 
-             $latestBytes =  $this->removeNotASCIISymbols(substr($this->buffer, -70));
+            $latestBytes = $this->removeNotASCIISymbols(substr($this->buffer, -70));
             if ($this->helper->getPaginationDetect()) {
                 if (preg_match($this->helper->getPaginationDetect(), $latestBytes)) {
                     if (!fwrite($this->session, "\n") < 0) {

@@ -155,10 +155,10 @@ abstract class AbstractConsole
      * @param boolean $add_newline Default true, adds newline to the command
      * @return string Command result
      */
-    public function exec($command, $add_newline = true, $prompt = null)
+    public function exec($command, $add_newline = true, $prompt = null, $timeoutStream = null)
     {
         $this->write($command, $add_newline);
-        $this->waitPrompt($prompt);
+        $this->waitPrompt($prompt, $timeoutStream);
         $buffer =  $this->getBuffer();
         if($lines = explode("\n", $buffer)) {
             if(isset($lines[0]) && trim($command) && strpos($lines[0], $command) !== false) {
@@ -269,12 +269,12 @@ abstract class AbstractConsole
     /**
      * Reads socket until prompt is encountered
      */
-    public function waitPrompt($prompt = null)
+    public function waitPrompt($prompt = null, $timeout = null)
     {
         if ($prompt === null) {
             $prompt = $this->prompt;
         }
-        $this->readTo($prompt);
+        $this->readTo($prompt, $timeout);
         return $this->buffer;
     }
 
