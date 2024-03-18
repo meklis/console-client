@@ -11,7 +11,6 @@ abstract class AbstractConsole
     protected $port;
     protected $timeout;
     protected $stream_timeout_sec;
-    protected $stream_timeout_usec;
 
     /**
      * @var HelperInterface
@@ -238,7 +237,6 @@ abstract class AbstractConsole
      */
     public function setStreamTimeout($timeout)
     {
-        $this->stream_timeout_usec = (int)(fmod($timeout, 1) * 1000000);
         $this->stream_timeout_sec = (int)$timeout;
     }
 
