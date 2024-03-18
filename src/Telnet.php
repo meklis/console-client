@@ -124,7 +124,7 @@ class Telnet extends AbstractConsole implements ConsoleInterface
             $this->waitPrompt();
             if ($this->helper->isDoubleLoginPrompt()) {
                 try {
-                    $this->waitPrompt('', 0.5);
+                    $this->waitPrompt('', 1);
                 } catch (\Exception $e) {
                 }
             }
@@ -146,10 +146,8 @@ class Telnet extends AbstractConsole implements ConsoleInterface
         if(!$timeoutSec) {
             $timeoutSec = $this->stream_timeout_sec;
         }
-        echo "TIMEOUT={$timeoutSec}\n";
         stream_set_timeout($this->socket, $timeoutSec);
         $c = fgetc($this->socket);
-        echo $c;
         try {
             $this->global_buffer->fwrite($c);
         } catch (\Throwable $e) {
