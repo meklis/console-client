@@ -168,6 +168,27 @@ abstract class AbstractConsole
         }
         return $this->removeNotASCIISymbols($buffer);
     }
+    /**
+     * Executes command and returns a string with result.
+     * Waiting to return with stream timeout
+     *
+     * @param string $command Command to execute
+     * @param boolean $add_newline Default true, adds newline to the command
+     * @return string Command result
+     */
+    public function execWaiting($command, $add_newline = true, $timeoutStream = null)
+    {
+        $this->write($command, $add_newline);
+        $this->waitPrompt('', $timeoutStream);
+        $buffer =  $this->getBuffer();
+        if($lines = explode("\n", $buffer)) {
+            if(isset($lines[0]) && trim($command) && strpos($lines[0], $command) !== false) {
+                unset($lines[0]);
+            }
+            return  $this->removeNotASCIISymbols(implode("\n", $lines));
+        }
+        return $this->removeNotASCIISymbols($buffer);
+    }
 
     protected function removeNotASCIISymbols($chars)
     {
