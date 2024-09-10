@@ -4,12 +4,12 @@ namespace Meklis\Network\Console\Helpers;
 
 class Junos extends DefaultHelper
 {
-    protected $prompt = '[>%#]';
+    protected $prompt = '.*@.*?[>%#]';
     protected $userPrompt = 'login:';
-    protected $passwordPrompt = 'Password:';
+    protected $passwordPrompt = 'ord:';
     protected $afterLoginCommands = [];
     protected $beforeLogoutCommands = [];
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = false;
+    protected $enableMagicControl = true;
     protected $windowSize = null;
 }
