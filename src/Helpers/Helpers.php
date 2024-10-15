@@ -27,6 +27,7 @@ class Helpers
         'gcom' => Gcom::class,
         'alcatel' => Alcatel::class,
         'dell' => Dell::class,
+        'eltex' => Eltex::class,
     ];
 
     /**
