@@ -4,7 +4,7 @@ namespace Meklis\Network\Console\Helpers;
 
 class Cdata extends DefaultHelper
 {
-    protected $prompt = '^(.*?More.*)|([0-9A-Za-z _\-"\(\)]{3,}[>#])$';
+    protected $prompt = '^(.*?More.*)|([0-9A-Za-z _\-"\(\)]{2,}[>#])$';
     protected $userPrompt = 'ame:';
     protected $passwordPrompt = 'assword:';
     protected $afterLoginCommands = [];
