@@ -8,6 +8,7 @@ class Helpers
         'default' => DefaultHelper::class,
         'dlink' => Dlink::class,
         'alaxala' => Alaxala::class,
+        'arista' => Arista::class,
         'bdcom' => Bdcom::class,
         'cdata' => Cdata::class,
         'ios' => Ios::class,
