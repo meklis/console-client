@@ -11,6 +11,7 @@ class Helpers
         'arista' => Arista::class,
         'bdcom' => Bdcom::class,
         'cdata' => Cdata::class,
+        'dcn' => DCN::class,
         'ios' => Ios::class,
         'junos' => Junos::class,
         'linux' => Linux::class,
