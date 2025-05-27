@@ -6,6 +6,7 @@ class Helpers
 {
     protected static $helpers = [
         'default' => DefaultHelper::class,
+        'raisecom' => Raisecom::class,
         'dlink' => Dlink::class,
         'alaxala' => Alaxala::class,
         'arista' => Arista::class,
