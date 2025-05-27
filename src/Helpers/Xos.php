@@ -4,7 +4,7 @@ namespace Meklis\Network\Console\Helpers;
 
 class Xos extends DefaultHelper
 {
-    protected $prompt = '[0-9A-Za-z\-\._]{1,} [>#]';
+    protected $prompt = '[0-9A-Za-z\-\._]{1,} [>#]$';
     protected $userPrompt = 'login:';
     protected $passwordPrompt = 'password:';
     protected $afterLoginCommands = [];
@@ -12,6 +12,6 @@ class Xos extends DefaultHelper
         'exit'
     ];
     protected $doubleLoginPrompt = false;
-    protected $enableMagicControl = true;
+    protected $enableMagicControl = false;
     protected $windowSize = null;
 }
