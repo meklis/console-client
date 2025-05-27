@@ -4,11 +4,10 @@ namespace Meklis\Network\Console\Helpers;
 
 class Raisecom extends DefaultHelper
 {
-    protected $userPrompt = 'ogin:';
+    protected $userPrompt = 'Login:';
     protected $passwordPrompt = 'Password:';
-    protected $prompt = '^[A-Za-z0-9_-]{1,}[>#]';
+    protected $prompt = '#$';
     protected $afterLoginCommands = [
-        'terminal length 0',
     ];
     protected $beforeLogoutCommands = [];
     protected $eol = "\n";
