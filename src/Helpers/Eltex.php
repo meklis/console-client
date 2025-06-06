@@ -4,13 +4,17 @@ namespace Meklis\Network\Console\Helpers;
 
 class Eltex extends DefaultHelper
 {
-    protected $prompt = '[>#]';
+    protected $prompt = '[#]$';
 	protected $eol = "\n";
-    protected $userPrompt = 'Name:';
-    protected $passwordPrompt = 'Password:';
+    protected $userPrompt = '(Name:|login:)\s*';
+    protected $passwordPrompt = 'Password:\s*';
     protected $afterLoginCommands = [
-        'terminal datadump',
-        'terminal width 512',
+        'set cli pagination off',
+        'configure',
+        'no logging console',
+        'exit',
+//        'terminal datadump',
+//        'terminal width 512',
     ];
     protected $beforeLogoutCommands = [
         ['command' => 'no terminal datadump', 'no_wait' => true],
