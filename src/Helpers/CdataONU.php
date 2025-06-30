@@ -4,7 +4,7 @@ namespace Meklis\Network\Console\Helpers;
 
 class CdataONU extends DefaultHelper
 {
-    protected $prompt = '^MDU(\(config\))?[>#]$';
+    protected $prompt = '^MDU(\(config(\-.*)?\))?[>#]$';
     protected $userPrompt = 'login:';
     protected $passwordPrompt = 'password:';
     protected $afterLoginCommands = [];
