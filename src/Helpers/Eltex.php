@@ -21,7 +21,7 @@ class Eltex extends DefaultHelper
     ];
     protected $doubleLoginPrompt = false;
     protected $enableMagicControl = true;
-    protected $windowSize = [512, 500];
+//    protected $windowSize = [512, 500];
 
 
     protected $waitingResponseTimeout = 1;
