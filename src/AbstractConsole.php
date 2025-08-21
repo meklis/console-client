@@ -87,6 +87,14 @@ abstract class AbstractConsole
     }
 
     /**
+     * @return DefaultHelper|HelperInterface
+     */
+    function getDeviceHelper()
+    {
+        return $this->helper;
+    }
+
+    /**
      * Destructor. Cleans up socket connection and command buffer
      *
      * @return void
