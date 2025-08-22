@@ -32,6 +32,7 @@ class Helpers
         'alcatel' => Alcatel::class,
         'dell' => Dell::class,
         'eltex' => Eltex::class,
+        'cisco' => Cisco::class,
     ];
 
     /**
