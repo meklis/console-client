@@ -4,9 +4,9 @@ namespace Meklis\Network\Console\Helpers;
 
 class Cisco extends DefaultHelper
 {
-    protected $prompt = '[>#]';
-    protected $userPrompt = 'Username:';
-    protected $passwordPrompt = 'Password:';
+    protected $prompt = '[>#] ';
+    protected $userPrompt = '(Username|Login): ';
+    protected $passwordPrompt = 'Password: ';
     protected $afterLoginCommands = [
         'terminal length 0'
     ];
