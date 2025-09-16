@@ -9,6 +9,7 @@ class Arista extends DefaultHelper
     protected $prompt = '^[A-Za-z0-9_-]{1,}[>#]';
     protected $afterLoginCommands = [
         'terminal length 0',
+        'terminal width 1024',
     ];
     protected $beforeLogoutCommands = [];
     protected $eol = "\n";
