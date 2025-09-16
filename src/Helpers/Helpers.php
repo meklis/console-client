@@ -31,6 +31,7 @@ class Helpers
         'gcom' => Gcom::class,
         'alcatel' => Alcatel::class,
         'dell' => Dell::class,
+        'dell_emc_networking_os' => DellEMCNetworkingOS::class,
         'eltex' => Eltex::class,
         'cisco' => Cisco::class,
     ];
