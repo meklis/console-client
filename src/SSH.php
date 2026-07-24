@@ -37,7 +37,7 @@ class SSH extends AbstractConsole
         $originalConnectionTimeout = ini_get('default_socket_timeout');
         ini_set('default_socket_timeout', 5);
         $methods = [
-            'hostkey' => 'rsa-sha2-512,rsa-sha2-256,ssh-ed25519,ssh-rsa,ssh-dss',
+            'hostkey' => 'ssh-ed25519,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ssh-dss',
             'kex' => 'curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha256,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1',
             'client_to_server' => [
                 'crypt' => 'aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc,arcfour,arcfour128,none',
