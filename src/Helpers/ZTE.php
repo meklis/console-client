@@ -4,7 +4,7 @@ namespace Meklis\Network\Console\Helpers;
 
 class ZTE extends DefaultHelper
 {
-    protected $prompt = '[>#]';
+    protected $prompt = '^(?!\!<\/?MSAN).*[>#]$';
     protected $userPrompt = 'Username:';
     protected $passwordPrompt = 'Password:';
     protected $afterLoginCommands = [
